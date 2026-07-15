@@ -1,11 +1,11 @@
 export default{
-    name:'abouts',
-    title:'Abouts',
+    name:'about',
+    title:'About',
     type: 'document',
     fields:[
         {
-            name:'title',
-            title:'Title',
+            name:'name',
+            title:'Name',
             type:'string'
         },
         {

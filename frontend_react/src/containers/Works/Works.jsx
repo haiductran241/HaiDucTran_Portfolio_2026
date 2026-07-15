@@ -6,16 +6,16 @@ import  { AppWrap } from '../../wrapper'
 import  { urlFor, client } from '../../Client'
 
 const Works = () => {
-  const [activeFilter, setactiveFilter] = useState('All')
+  const [activeFilter, setActiveFilter] = useState('All')
   const [works, setWorks] = useState([])
-  const [filterWork, setfilterWork] = useState([])
-  const [animateCard, setanimateCard] = useState({ y: 0, opacity: 1 })
+  const [filterWork, setFilterWork] = useState([])
+  const [animateCard, setAnimateCard] = useState({ y: 0, opacity: 1 })
   useEffect(() => {
-    const query='*[_type == "work"]';
+    const query='*[_type == "works"]';
     client.fetch(query)
     .then((data) => {
       setWorks(data)
-      setfilterWork(data)
+      setFilterWork(data)
     })
   }, [])
   
@@ -23,12 +23,21 @@ const Works = () => {
   
   
   const handleWorkFilter = (item) => {
-
+    setActiveFilter (item)
+    setAnimateCard([{ y: 100, opacity: 0 }])
+    setTimeout(() => {
+      setAnimateCard([{ y: 0, opacity: 1 }])
+      if (item === 'All') {
+        setFilterWork(works)
+      } else {
+        setFilterWork(works.filter((work) => work.tags.includes(item)))
+      }
+    }, 500);
   }
   return (
     <>
       <h2 className="head-text"> My Creative <span>Portfolio</span> Section</h2>
-      <div className="app__filter">
+      <div className="app__filter"> {/* đoạn code ở dưới dùng để thay tag cho phần projects */}
         {['UI/UX', 'Web App', 'Mobile App', 'React JS', 'All'].map((item, index) => (
           <div
             key={index}
@@ -48,7 +57,7 @@ const Works = () => {
         {filterWork.map((work, index) => (
           <div className="app__work-item app__flex" key={index}>
             <div className="app__work-img app__flex">
-              <img src={urlFor(work.imgUrl)} alt={work.name} />
+              {work.imgUrl && <img src={urlFor(work.imgUrl)} alt={work.title || work.name} />}
               <motion.div
                 whileHover={{ opacity: [0, 1] }}
                 transition={{ duration: 0.25, ease: 'easeInOut', staggerChildren: 0.5 }}
@@ -82,10 +91,10 @@ const Works = () => {
 
 
               <div className="app__work-tag app__flex">
-                <p className="p-text">{work.tags[0]}</p>
+                <p className="p-text">{work.tags?.[0]}</p>
               </div>
 
-              
+
             </div>
           </div>
         ))}
