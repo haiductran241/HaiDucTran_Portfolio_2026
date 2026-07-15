@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './Works.scss'
 import  { AiFillEye, AiFillGithub } from 'react-icons/ai'
 import  { motion } from 'framer-motion'
-import  { AppWrap } from '../../wrapper'
+import  { AppWrap, MotionWrap } from '../../wrapper'
 import  { urlFor, client } from '../../Client'
 
 const Works = () => {
@@ -37,7 +37,7 @@ const Works = () => {
   return (
     <>
       <h2 className="head-text"> My Creative <span>Portfolio</span> Section</h2>
-      <div className="app__filter"> {/* đoạn code ở dưới dùng để thay tag cho phần projects */}
+      <div className="app__filter"> 
         {['UI/UX', 'Web App', 'Mobile App', 'React JS', 'All'].map((item, index) => (
           <div
             key={index}
@@ -103,4 +103,8 @@ const Works = () => {
   )
 }
 
-export default AppWrap(Works, 'works')
+export default AppWrap(
+  MotionWrap(Works, 'app__works'),
+  'work',
+  'app__primarybg',
+);
