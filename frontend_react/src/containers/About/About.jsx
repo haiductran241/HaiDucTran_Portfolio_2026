@@ -3,7 +3,7 @@ import './About.scss'
 import { motion } from 'framer-motion'
 import { images } from '../../constants'
 import { client } from '../../Client'
-
+import  { AppWrap } from '../../wrapper'
 const fallbackImages = [images.about01, images.about02, images.about03, images.about04]
 
 
@@ -53,4 +53,4 @@ const About = () => {
   )
 }
 
-export default About
+export default AppWrap(About, 'about')
